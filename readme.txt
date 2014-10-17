@@ -1,6 +1,6 @@
-=== F4D ===
-Contributors: ahortin
-Donate link: http://quarktheme.com
+﻿=== F4D ===
+Contributors: ILowell, ahortin
+Donate link: 
 Tags: black, gray, dark, light, one-column, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 3.6
 Tested up to: 4.0
@@ -8,13 +8,13 @@ Stable tag: 1.2.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Quark is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom Theme Options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. F4D is now Multilingual Ready (WPML) and translated into Spanish and German.
+ F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom Theme Options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. F4D is now Multilingual Ready (WPML) and translated into Spanish and German.
 
 
 == Description ==
 
-Quark is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or
-even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the Underscores (_s) and TwentyTwelve themes, so that
+ F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or
+even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the Quark theme which uses; Underscores (_s) and TwentyTwelve themes, so that
 means not only is it flexible, it's extremely easy to customise. There's no need to make a child theme (unless you really want to), just dig in to the
 code & use it to give yourself a kickstart in creating your next awesome theme.
 
@@ -28,7 +28,7 @@ The main navigation uses the standard WordPress menu. Support for dropdown menus
 
 Templates
 
-Quark includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag,
+ F4D includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag,
 Categories, Authors, Search, Posts Archive and 404.
 
 Post Formats
@@ -145,7 +145,7 @@ Lastly, update the stylesheet header in style.css and either update or delete th
 
 == License ==
 
-Quark is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+ F4D is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -153,7 +153,7 @@ Free Software Foundation; either version 2 of the License, or (at your option) a
 
 == Credits ==
 
-Quark utilises the following awesomeness:
+ F4D utilises the following awesomeness:
 
 [Options Framework](http://wptheming.com/options-framework-theme), which is licensed under the GPLv2 License
 [Modernizr](http://modernizr.com), which is licensed under the MIT license
