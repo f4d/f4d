@@ -20,7 +20,7 @@ if ( ! isset( $content_width ) )
  *
  * Note that this function is hooked into the after_setup_theme hook, which runs
  * before the init hook. The init hook is too late for some features, such as indicating
- * support post thumbnails.
+ * support for post thumbnails.
  *
  * @since F4D 1.0
  *
@@ -173,6 +173,62 @@ function f4d_mce_css( $mce_css ) {
 	return $mce_css;
 }
 add_filter( 'mce_css', 'f4d_mce_css' );
+
+
+/** Add support for specific Custom Post types we use frequently.....
+*  This is the Factsheet post type
+* if ( ! function_exists('custom_post_type') ) {
+
+// Register Custom Post Type
+function custom_post_type() {
+
+	$labels = array(
+		'name'                => _x( 'Factsheets', 'Post Type General Name', 'f4d' ),
+		'singular_name'       => _x( 'Factsheet', 'Post Type Singular Name', 'f4d' ),
+		'menu_name'           => __( 'Factsheets', 'f4d' ),
+		'parent_item_colon'   => __( 'Parent Item:', 'f4d' ),
+		'all_items'           => __( 'All Factsheets', 'f4d' ),
+		'view_item'           => __( 'View Item', 'f4d' ),
+		'add_new_item'        => __( 'Add New Factsheet', 'f4d' ),
+		'add_new'             => __( 'New Factsheet', 'f4d' ),
+		'edit_item'           => __( 'Edit Factsheet', 'f4d' ),
+		'update_item'         => __( 'Update Factsheet', 'f4d' ),
+		'search_items'        => __( 'Search Factsheets', 'f4d' ),
+		'not_found'           => __( 'Factsheets Not found', 'f4d' ),
+		'not_found_in_trash'  => __( 'Factsheets Not found in Trash', 'f4d' ),
+	);
+	$args = array(
+		'label'               => __( 'fs_post_type', 'f4d' ),
+		'description'         => __( 'Factsheets are used for updates categorized under Factsheets.', 'f4d' ),
+		'labels'              => $labels,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'page-attributes', 'post-formats', ),
+		'taxonomies'          => array( 'category', 'post_tag', 'post_format' ),
+		'hierarchical'        => false,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => true,
+		'show_in_admin_bar'   => true,
+		'menu_position'       => 5,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'post',
+	);
+	register_post_type( 'fs_post_type', $args );
+
+}
+
+// Hook into the 'init' action
+add_action( 'init', 'custom_post_type', 0 );
+
+}
+
+*
+*
+*/
+
 
 
 /**
