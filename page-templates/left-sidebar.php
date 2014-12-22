@@ -4,8 +4,8 @@
  *
  * Description: Displays a page with a left hand sidebar.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 
 get_header(); ?>

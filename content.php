@@ -2,8 +2,8 @@
 /**
  * The default template for displaying content. Used for both single and index/archive/search.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 ?>
 

@@ -6,8 +6,8 @@
  * There are also four footer widgets displayed. These will be displayed from
  * one to four columns, depending on how many widgets are active.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 ?>
 

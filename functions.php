@@ -1,15 +1,15 @@
 <?php
 /**
- * F4D functions and definitions
+ * f4d functions and definitions
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 
 /**
  * Set the content width based on the theme's design and stylesheet.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  */
 if ( ! isset( $content_width ) )
 	$content_width = 790; /* Default the embedded content width to 790px */
@@ -22,7 +22,7 @@ if ( ! isset( $content_width ) )
  * before the init hook. The init hook is too late for some features, such as indicating
  * support for post thumbnails.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -33,7 +33,7 @@ if ( ! function_exists( 'f4d_setup' ) ) {
 		/**
 		 * Make theme available for translation
 		 * Translations can be filed in the /languages/ directory
-		 * If you're building a theme based on F4D, use a find and replace
+		 * If you're building a theme based on f4d, use a find and replace
 		 * to change 'f4d' to the name of your theme in all the template files
 		 */
 		load_theme_textdomain( 'f4d', trailingslashit( get_template_directory() ) . 'languages' );
@@ -102,7 +102,7 @@ add_action( 'after_setup_theme', 'f4d_setup' );
  *
  * The use of PT Sans and Arvo by default is localized. For languages that use characters not supported by the fonts, the fonts can be disabled.
  *
- * @since F4D 1.2.5
+ * @since f4d 1.2.5
  *
  * @return string Font stylesheet or empty string if disabled.
  */
@@ -152,7 +152,7 @@ function f4d_fonts_url() {
 /**
  * Adds additional stylesheets to the TinyMCE editor if needed.
  *
- * @since F4D 1.2.5
+ * @since f4d 1.2.5
  *
  * @param string $mce_css CSS path to load in TinyMCE.
  * @return string The filtered CSS paths list.
@@ -234,7 +234,7 @@ add_action( 'init', 'custom_post_type', 0 );
 /**
  * Register widgetized areas
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -245,8 +245,8 @@ function f4d_widgets_init() {
 			'description' => esc_html__( 'Appears in the sidebar on posts and pages except the optional Front Page template, which has its own widgets', 'f4d' ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>'
+			'before_title' => '<h4 class="widget-title">',
+			'after_title' => '</h4>'
 		) );
 
 	register_sidebar( array(
@@ -285,8 +285,8 @@ function f4d_widgets_init() {
 			'description' => esc_html__( 'Appears in the banner area on the Front Page', 'f4d' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => '</div>',
-			'before_title' => '<h1 class="widget-title">',
-			'after_title' => '</h1>'
+			'before_title' => '<h2 class="widget-title">',
+			'after_title' => '</h2>'
 		) );
 
 	register_sidebar( array(
@@ -295,8 +295,8 @@ function f4d_widgets_init() {
 			'description' => esc_html__( 'Appears in the banner area on the Front Page', 'f4d' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => '</div>',
-			'before_title' => '<h1 class="widget-title">',
-			'after_title' => '</h1>'
+			'before_title' => '<h2 class="widget-title">',
+			'after_title' => '</h2>'
 		) );
 
 	register_sidebar( array(
@@ -385,7 +385,7 @@ add_action( 'widgets_init', 'f4d_widgets_init' );
 /**
  * Enqueue scripts and styles
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -414,13 +414,13 @@ function f4d_scripts_styles() {
 	 *
 	 * To disable in a child theme, use wp_dequeue_style()
 	 * function mytheme_dequeue_fonts() {
-	 *     wp_dequeue_style( 'quark-fonts' );
+	 *     wp_dequeue_style( ' f4d-fonts' );
 	 * }
 	 * add_action( 'wp_enqueue_scripts', 'mytheme_dequeue_fonts', 11 );
 	 */
 	$fonts_url = f4d_fonts_url();
 	if ( !empty( $fonts_url ) ) {
-		wp_enqueue_style( 'quark-fonts', esc_url_raw( $fonts_url ), array(), null );
+		wp_enqueue_style( ' f4d-fonts', esc_url_raw( $fonts_url ), array(), null );
 	}
 
 	// Enqueue the default WordPress stylesheet
@@ -467,7 +467,7 @@ add_action( 'wp_enqueue_scripts', 'f4d_scripts_styles' );
  * Creates a nicely formatted and more specific title element text
  * for output in head of document, based on current view.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string $title Default title text for current view.
  * @param string $sep Optional separator.
@@ -502,7 +502,7 @@ add_filter( 'wp_title', 'f4d_wp_title', 10, 2 );
 /**
  * Displays navigation to next/previous pages when applicable.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string html ID
  * @return void
@@ -557,7 +557,7 @@ if ( ! function_exists( 'f4d_content_nav' ) ) {
  * Used as a callback by wp_list_comments() for displaying the comments.
  * (Note the lack of a trailing </li>. WordPress will add it itself once it's done listing any children and whatnot)
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param array Comment
  * @param array Arguments
@@ -622,7 +622,7 @@ if ( ! function_exists( 'f4d_comment' ) ) {
 /**
  * Update the Comments form so that the 'required' span is contained within the form label.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string Comment form fields html
  * @return string The updated comment form fields html
@@ -649,7 +649,7 @@ add_action( 'comment_form_default_fields', 'f4d_comment_form_default_fields' );
  * Update the Comments form to add a 'required' span to the Comment textarea within the form label, because it's pointless 
  * submitting a comment that doesn't actually have any text in the comment field!
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string Comment form textarea html
  * @return string The updated comment form textarea html
@@ -667,7 +667,7 @@ add_action( 'comment_form_field_comment', 'f4d_comment_form_field_comment' );
 /**
  * Prints HTML with meta information for current post: author and date
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -751,7 +751,7 @@ if ( ! function_exists( 'f4d_posted_on' ) ) {
 /**
  * Prints HTML with meta information for current post: categories, tags, permalink
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -772,9 +772,9 @@ if ( ! function_exists( 'f4d_entry_meta' ) ) {
 
 
 /**
- * Adjusts content_width value for full-width templates and attachments
+ * Adjusts content_width value for full-width templates and attachments -- WHY DO THIS -Ian?
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -790,7 +790,7 @@ add_action( 'template_redirect', 'f4d_content_width' );
 /**
  * Change the "read more..." link so it links to the top of the page rather than part way down
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string The 'Read more' link
  * @return string The link to the post url without the more tag appended on the end
@@ -811,7 +811,7 @@ add_filter( 'the_content_more_link', 'f4d_remove_more_jump_link' );
 /**
  * Returns a "Continue Reading" link for excerpts
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return string The 'Continue reading' link
  */
@@ -824,7 +824,7 @@ function f4d_continue_reading_link() {
 /**
  * Replaces "[...]" (appended to automatically generated excerpts) with the f4d_continue_reading_link().
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param string Auto generated excerpt
  * @return string The filtered excerpt
@@ -838,7 +838,7 @@ add_filter( 'excerpt_more', 'f4d_auto_excerpt_more' );
 /**
  * Extend the user contact methods to include Twitter, Facebook and Google+
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param array List of user contact methods
  * @return array The filtered list of updated user contact methods
@@ -862,7 +862,7 @@ add_filter( 'user_contactmethods', 'f4d_new_contactmethods', 10, 1 );
  * Add a filter for wp_nav_menu to add an extra class for menu items that have children (ie. sub menus)
  * This allows us to perform some nicer styling on our menu items that have multiple levels (eg. dropdown menu arrows)
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @param Menu items
  * @return array An extra css class is on menu items with children
@@ -890,7 +890,7 @@ add_filter( 'wp_nav_menu_objects', 'f4d_add_menu_parent_class' );
 /**
  * Add Filter to allow Shortcodes to work in the Sidebar
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  */
 add_filter( 'widget_text', 'do_shortcode' );
 
@@ -898,7 +898,7 @@ add_filter( 'widget_text', 'do_shortcode' );
 /**
  * Return an unordered list of linked social media icons, based on the urls provided in the Theme Options
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return string Unordered list of linked social media icons
  */
@@ -947,7 +947,7 @@ if ( ! function_exists( 'f4d_get_social_media' ) ) {
 /**
  * Return a string containing the footer credits & link
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return string Footer credits & link
  */
@@ -955,10 +955,10 @@ if ( ! function_exists( 'f4d_get_credits' ) ) {
 	function f4d_get_credits() {
 		$output = '';
 		$output = sprintf( '%1$s <a href="%2$s" title="%3$s">%4$s</a>',
-			esc_html__( 'Proudly powered by', 'f4d' ),
-			esc_url( esc_html__( 'http://wordpress.org/', 'f4d' ) ),
-			esc_attr( esc_html__( 'Semantic Personal Publishing Platform', 'f4d' ) ),
-			esc_html__( 'WordPress', 'f4d' )
+			esc_html__( 'Designed by', 'f4d' ),
+			esc_url( esc_html__( 'http://f4digital.com', 'f4d' ) ),
+			esc_attr( esc_html__( 'F4Digital', 'f4d' ) ),
+			esc_html__( '.com', 'f4d' )
 		);
 
 		return $output;
@@ -969,7 +969,7 @@ if ( ! function_exists( 'f4d_get_credits' ) ) {
 /**
  * Outputs the selected Theme Options inline into the <head>
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  *
  * @return void
  */
@@ -1018,7 +1018,7 @@ add_action( 'wp_head', 'f4d_theme_options_styles' );
  * We don't include an add_filter for 'prepend_attachment' as it causes an image to appear in the content, on attachment pages.
  * Also, since the Theme Options editor doesn't allow you to add images anyway, no big deal.
  *
- * @since F4D 1.0
+ * @since f4d 1.0
  */
 add_filter( 'meta_content', 'wptexturize' );
 add_filter( 'meta_content', 'convert_smilies' );
@@ -1029,9 +1029,7 @@ add_filter( 'meta_content', 'shortcode_unautop'  );
 
 //   REZON8 Plugin functions  //
 
-// ALLOW SHORTCODES IN TXT WIDGETS  //
 
-add_filter( 'widget_text', 'do_shortcode');
 
 
 // REMOVE UNNECESSARY META TAGS FROM HTML MARKUP //
@@ -1051,7 +1049,6 @@ add_filter( 'upload_mimes', 'allow_svg_upload_mimes' );
 
 //     Extending the Display-posts-shortcode plugin  //
 
-add_filter( 'display_posts_shortcode_no_results', 'be_no_results' );
 /**
  * Display Posts Shortcode - Display message if no results
  *
@@ -1062,9 +1059,11 @@ add_filter( 'display_posts_shortcode_no_results', 'be_no_results' );
  * @return string $output
  */
 function be_no_results( $output ) {
-	$output = '<p>Sorry, there are currently no articles in this list.</p>';
+	$output = '<p>There is no content to display.</p>';
 	return $output;
 }
+add_filter( 'display_posts_shortcode_no_results', 'be_no_results' );
+
 
 /**
  * Display Posts - Exclude Current Post

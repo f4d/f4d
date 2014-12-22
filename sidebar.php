@@ -2,8 +2,8 @@
 /**
  * The Sidebar containing the main widget areas.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 ?>
 	<div class="col grid_4_of_12">

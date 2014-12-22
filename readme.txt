@@ -1,4 +1,4 @@
-﻿=== F4D ===
+﻿=== f4d ===
 Contributors: ILowell, ahortin
 Donate link: 
 Tags: black, gray, dark, light, one-column, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
@@ -8,13 +8,13 @@ Stable tag: 1.2.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
- F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom Theme Options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. F4D is now Multilingual Ready (WPML) and translated into Spanish and German.
+ f4d is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom Theme Options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. f4d is now Multilingual Ready (WPML) and translated into Spanish and German.
 
 
 == Description ==
 
- F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or
-even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the Quark theme which uses; Underscores (_s) and TwentyTwelve themes, so that
+ f4d is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or
+even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the  f4d theme which uses; Underscores (_s) and TwentyTwelve themes, so that
 means not only is it flexible, it's extremely easy to customise. There's no need to make a child theme (unless you really want to), just dig in to the
 code & use it to give yourself a kickstart in creating your next awesome theme.
 
@@ -28,7 +28,7 @@ The main navigation uses the standard WordPress menu. Support for dropdown menus
 
 Templates
 
- F4D includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag,
+ f4d includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag,
 Categories, Authors, Search, Posts Archive and 404.
 
 Post Formats
@@ -38,7 +38,7 @@ your standard post.
 
 Widgets
 
-Widgets are a great way of adding extra content to your site and F4D has a whole assortment of them.
+Widgets are a great way of adding extra content to your site and f4d has a whole assortment of them.
 
 Main Sidebar: Appears in the sidebar on posts and pages except the optional Homepage template, which has its own widgets
 Blog Sidebar: Appears in the sidebar on the blog and archive pages only
@@ -94,21 +94,21 @@ There are three ways to install your theme. It can be installed by manually uplo
 it can be installed by downloading from the WordPress Theme Directory within the Dashboard or it can be installed by uploading the theme zip
 file that you downloaded.
 
-Use the following instructions to install & activate F4D using your preferred method.
+Use the following instructions to install & activate f4d using your preferred method.
 
 Manual installation:
 
-1. Unzip the files from the F4D zip file that you downloaded
-2. Upload the F4D folder to your /wp-content/themes/ directory
+1. Unzip the files from the f4d zip file that you downloaded
+2. Upload the f4d folder to your /wp-content/themes/ directory
 3. Click on the Appearance > Themes menu option in the WordPress Dashboard
-4. Click the Activate link below the F4D preview thumbnail
+4. Click the Activate link below the f4d preview thumbnail
 
 Install from the WordPress Theme Directory:
 
 1. Click on the Appearance > Themes menu option in the WordPress Dashboard
 2. Click the Install Themes tab at the top of the page
 3. Type 'f4d' in the search field, without the quotes, and then click the Search button
-4. Click the Install Now link below the F4D preview thumbnail
+4. Click the Install Now link below the f4d preview thumbnail
 5. Once the theme has been installed, click the Activate link
 
 Install by uploading the theme zip file:
@@ -123,12 +123,12 @@ Install by uploading the theme zip file:
 
 == Getting Started ==
 
-Since F4D is a starter theme to kick off your own awesome theme, the first thing you want to do is copy the F4D theme folder 
+Since f4d is a starter theme to kick off your own awesome theme, the first thing you want to do is copy the f4d theme folder 
 and change the name to something else. You'll then need to do a three-step find and replace on the name in all the templates.
 
-1. Search for F4D inside single quotations to capture the text domain.
+1. Search for f4d inside single quotations to capture the text domain.
 2. Search for f4d_ to capture all the function names.
-3. Search for F4D with a space before it to replace all the occurrences of it in comments.
+3. Search for f4d with a space before it to replace all the occurrences of it in comments.
    (You'd replace this with the capitalized version of your theme name.)
 
 or, to put it another way...
@@ -137,7 +137,7 @@ Search for:'f4d'
  Replace with:'yourawesomethemename'
 Search for:f4d_
  Replace with:yourawesomethemename_
-Search for: F4D
+Search for: f4d
  Replace with: YourAwesomeThemeName
 
 Lastly, update the stylesheet header in style.css and either update or delete this readme.txt file.
@@ -145,7 +145,7 @@ Lastly, update the stylesheet header in style.css and either update or delete th
 
 == License ==
 
- F4D is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+ f4d is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -153,7 +153,7 @@ Free Software Foundation; either version 2 of the License, or (at your option) a
 
 == Credits ==
 
- F4D utilises the following awesomeness:
+ f4d utilises the following awesomeness:
 
 [Options Framework](http://wptheming.com/options-framework-theme), which is licensed under the GPLv2 License
 [Modernizr](http://modernizr.com), which is licensed under the MIT license

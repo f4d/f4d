@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: F4D\n"
+"Project-Id-Version: f4d\n"
 "POT-Creation-Date: 2014-05-19 23:28+0100\n"
 "PO-Revision-Date: 2014-05-20 17:49+0100\n"
 "Last-Translator: Tino Groteloh\n"

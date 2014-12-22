@@ -10,8 +10,8 @@
  * banner widgets, they will be displayed in anywhere from one to four columns, depending on
  * how many widgets are active.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 
 get_header(); ?>

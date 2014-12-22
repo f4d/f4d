@@ -7,8 +7,8 @@
  * handled by a callback to f4d_comment() which is
  * located in the functions.php file.
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 
 /*

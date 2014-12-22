@@ -2,8 +2,8 @@
 /**
  * The template for displaying posts in the Aside post format
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 ?>
 

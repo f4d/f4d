@@ -2,8 +2,8 @@
 /**
  * The template for displaying Author bios.
  *
- * @package F4D
- * @since F4D 1.2.5
+ * @package f4d
+ * @since f4d 1.2.5
  */
 ?>
 

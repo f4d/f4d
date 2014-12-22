@@ -2,8 +2,8 @@
 /**
  * The template used for displaying page content in page.php
  *
- * @package F4D
- * @since F4D 1.0
+ * @package f4d
+ * @since f4d 1.0
  */
 ?>
 
