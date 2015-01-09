@@ -1081,3 +1081,32 @@ function be_exclude_current_post( $args ) {
 	return $args;
 }
 add_filter( 'display_posts_shortcode_args', 'be_exclude_current_post' );
+
+
+
+/** Register oEmbed providers  **/
+function ifttt_oembed_provider() {
+
+	wp_oembed_add_provider( '#https?://(www\.)?ifttt.com/recipes/.*#i', 'http://www.ifttt.com/oembed/', true );
+
+}
+// Hook into the 'init' action
+add_action( 'init', 'ifttt_oembed_provider' );
+
+function instagram_oembed_provider() {
+
+	wp_oembed_add_provider( 'http://instagram.com/p/*', 'http://api.instagram.com/oembed', false );
+	wp_oembed_add_provider( 'http://instagr.am/p/*', 'http://api.instagram.com/oembed', false );
+
+}
+// Hook into the 'init' action
+add_action( 'init', 'instagram_oembed_provider' );
+
+// Register oEmbed providers
+function kickstarter_oembed_provider() {
+
+	wp_oembed_add_provider( 'http://www.kickstarter.com/projects/*', 'http://www.kickstarter.com/services/oembed', false );
+
+}
+// Hook into the 'init' action
+add_action( 'init', 'kickstarter_oembed_provider' );
