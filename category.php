@@ -2,8 +2,8 @@
 /**
  * The template for displaying an archive page for Categories.
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 
 get_header(); ?>
@@ -15,7 +15,7 @@ get_header(); ?>
 			<?php if ( have_posts() ) : ?>
 
 				<header class="archive-header">
-					<h1 class="archive-title"><?php printf( esc_html__( 'Category Archives: %s', 'f4d' ), '<span class="cat-archive">' . single_cat_title( '', false ) . '</span>' ); ?></h1>
+					<h1 class="archive-title"><?php printf( esc_html__( 'All: %s', f4d ), '<span class="cat-archive">' . single_cat_title( '', false ) . '</span>' ); ?></h1>
 
 					<?php if ( category_description() ) { // Show an optional category description ?>
 						<div class="archive-meta"><?php echo category_description(); ?></div>

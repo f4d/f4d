@@ -11,12 +11,12 @@ jQuery( document ).ready( function( $ ) {
 
 		$( '.menu-toggle' ).unbind( 'click' ).click( function() {
 			$masthead.find( '.nav-menu' ).toggle();
-			$( this ).toggleClass( 'toggled-on' );
+			$( '.main-small-navigation' ).toggleClass( 'toggled-on' );
 		} );
 	};
 
 	// Check viewport width on first load.
-	if ( $( window ).width() < 520 )
+	if ( $( window ).width() < 901 )
 		$.fn.smallMenu();
 
 	// Check viewport width when user resizes the browser window.
@@ -27,7 +27,7 @@ jQuery( document ).ready( function( $ ) {
 			clearTimeout( timeout );
 
 		timeout = setTimeout( function() {
-			if ( browserWidth < 520 ) {
+			if ( $( window ).width()  < 901 ) {
 				$.fn.smallMenu();
 			} else {
 				$masthead.find( '#site-navigation' ).removeClass( 'main-small-navigation' ).addClass( 'main-navigation' );

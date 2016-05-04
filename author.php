@@ -2,8 +2,8 @@
 /**
  * The template for displaying an archive page for Categories.
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 
 get_header(); ?>
@@ -21,7 +21,7 @@ get_header(); ?>
 				?>
 
 				<header class="archive-header">
-					<h1 class="archive-title"><?php printf( esc_html__( 'Author Archives: %s', 'f4d' ), '<span class="vcard">' . get_the_author() . '</span>' ); ?></h1>
+					<h1 class="archive-title"><?php printf( esc_html__( 'Author Archives: %s', f4d ), '<span class="vcard">' . get_the_author() . '</span>' ); ?></h1>
 				</header><!-- .archive-header -->
 
 				<?php // If a user has filled out their description, show a bio on their entries.

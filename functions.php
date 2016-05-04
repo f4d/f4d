@@ -1,15 +1,15 @@
 <?php
 /**
- * f4d functions and definitions
+ * F4D functions and definitions
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 
 /**
  * Set the content width based on the theme's design and stylesheet.
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  */
 if ( ! isset( $content_width ) )
 	$content_width = 790; /* Default the embedded content width to 790px */
@@ -20,9 +20,9 @@ if ( ! isset( $content_width ) )
  *
  * Note that this function is hooked into the after_setup_theme hook, which runs
  * before the init hook. The init hook is too late for some features, such as indicating
- * support for post thumbnails.
+ * support post thumbnails.
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -33,10 +33,10 @@ if ( ! function_exists( 'f4d_setup' ) ) {
 		/**
 		 * Make theme available for translation
 		 * Translations can be filed in the /languages/ directory
-		 * If you're building a theme based on f4d, use a find and replace
-		 * to change 'f4d' to the name of your theme in all the template files
+		 * If you're building a theme based on F4D, use a find and replace
+		 * to change f4d to the name of your theme in all the template files
 		 */
-		load_theme_textdomain( 'f4d', trailingslashit( get_template_directory() ) . 'languages' );
+		load_theme_textdomain( f4d, trailingslashit( get_template_directory() ) . 'languages' );
 
 		// This theme styles the visual editor with editor-style.css to match the theme style.
 		add_editor_style();
@@ -52,11 +52,14 @@ if ( ! function_exists( 'f4d_setup' ) ) {
 
 		// This theme uses wp_nav_menu() in one location
 		register_nav_menus( array(
-				'primary' => esc_html__( 'Primary Menu', 'f4d' )
+				'primary' => esc_html__( 'Primary Menu', f4d )
 			) );
 
 		// This theme supports a variety of post formats
 		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
+
+		// Add theme support for HTML5 markup for the search forms, comment forms, comment lists, gallery, and caption
+		add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
 
 		// Enable support for Custom Backgrounds
 		add_theme_support( 'custom-background', array(
@@ -84,17 +87,51 @@ if ( ! function_exists( 'f4d_setup' ) ) {
 				'height' => 80
 			) );
 
+		/*
+		 * Let WordPress manage the document title.
+		 * By adding theme support, we declare that this theme does not use a
+		 * hard-coded <title> tag in the document head, and expect WordPress to
+		 * provide it for us.
+		 */
+		add_theme_support( 'title-tag' );
+
+		// Enable support for WooCommerce
+		add_theme_support( 'woocommerce' );
+
 		// Enable support for Theme Options.
 		// Rather than reinvent the wheel, we're using the Options Framework by Devin Price, so huge props to him!
 		// http://wptheming.com/options-framework-theme/
 		if ( !function_exists( 'optionsframework_init' ) ) {
 			define( 'OPTIONS_FRAMEWORK_DIRECTORY', trailingslashit( get_template_directory_uri() ) . 'inc/' );
 			require_once trailingslashit( dirname( __FILE__ ) ) . 'inc/options-framework.php';
+
+			// Loads options.php from child or parent theme
+			$optionsfile = locate_template( 'options.php' );
+			load_template( $optionsfile );
 		}
 
+		// If WooCommerce is running, check if we should be displaying the Breadcrumbs
+		if( f4d_is_woocommerce_active() && !of_get_option( 'woocommerce_breadcrumbs', '1' ) ) {
+			add_action( 'init', 'f4d_remove_woocommerce_breadcrumbs' );
+		}
 	}
 }
 add_action( 'after_setup_theme', 'f4d_setup' );
+
+
+/**
+ * Enable backwards compatability for title-tag support
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( '_wp_render_title_tag' ) ) {
+	function f4d_slug_render_title() { ?>
+		<title><?php wp_title( '|', true, 'right' ); ?></title>
+	<?php }
+	add_action( 'wp_head', 'f4d_slug_render_title' );
+}
 
 
 /**
@@ -102,7 +139,7 @@ add_action( 'after_setup_theme', 'f4d_setup' );
  *
  * The use of PT Sans and Arvo by default is localized. For languages that use characters not supported by the fonts, the fonts can be disabled.
  *
- * @since f4d 1.2.5
+ * @since F4D 1.2.5
  *
  * @return string Font stylesheet or empty string if disabled.
  */
@@ -113,12 +150,12 @@ function f4d_fonts_url() {
 	/* translators: If there are characters in your language that are not supported by PT Sans, translate this to 'off'.
 	 * Do not translate into your own language.
 	 */
-	$pt_sans = _x( 'on', 'PT Sans font: on or off', 'f4d' );
+	$pt_sans = _x( 'on', 'PT Sans font: on or off', f4d );
 
 	/* translators: To add an additional PT Sans character subset specific to your language, translate this to 'greek', 'cyrillic' or 'vietnamese'.
 	 * Do not translate into your own language.
 	 */
-	$subset = _x( 'no-subset', 'PT Sans font: add new subset (cyrillic)', 'f4d' );
+	$subset = _x( 'no-subset', 'PT Sans font: add new subset (cyrillic)', f4d );
 
 	if ( 'cyrillic' == $subset )
 		$subsets .= ',cyrillic';
@@ -126,13 +163,13 @@ function f4d_fonts_url() {
 	/* translators: If there are characters in your language that are not supported by Arvo, translate this to 'off'.
 	 * Do not translate into your own language.
 	 */
-	$arvo = _x( 'on', 'Arvo font: on or off', 'f4d' );
+	$arvo = _x( 'on', 'Arvo font: on or off', f4d );
 
 	if ( 'off' !== $pt_sans || 'off' !== $arvo ) {
 		$font_families = array();
 
 		if ( 'off' !== $pt_sans )
-			$font_families[] = 'PT+Sans:400,400italic,700,700italic';
+			$font_families[] = 'Noto+Sans:400,400italic,700';
 
 		if ( 'off' !== $arvo )
 			$font_families[] = 'Arvo:400';
@@ -152,7 +189,7 @@ function f4d_fonts_url() {
 /**
  * Adds additional stylesheets to the TinyMCE editor if needed.
  *
- * @since f4d 1.2.5
+ * @since F4D 1.2.5
  *
  * @param string $mce_css CSS path to load in TinyMCE.
  * @return string The filtered CSS paths list.
@@ -175,84 +212,38 @@ function f4d_mce_css( $mce_css ) {
 add_filter( 'mce_css', 'f4d_mce_css' );
 
 
-/** Add support for specific Custom Post types we use frequently.....
-*  This is the Factsheet post type
-* if ( ! function_exists('custom_post_type') ) {
-
-// Register Custom Post Type
-function custom_post_type() {
-
-	$labels = array(
-		'name'                => _x( 'Factsheets', 'Post Type General Name', 'f4d' ),
-		'singular_name'       => _x( 'Factsheet', 'Post Type Singular Name', 'f4d' ),
-		'menu_name'           => __( 'Factsheets', 'f4d' ),
-		'parent_item_colon'   => __( 'Parent Item:', 'f4d' ),
-		'all_items'           => __( 'All Factsheets', 'f4d' ),
-		'view_item'           => __( 'View Item', 'f4d' ),
-		'add_new_item'        => __( 'Add New Factsheet', 'f4d' ),
-		'add_new'             => __( 'New Factsheet', 'f4d' ),
-		'edit_item'           => __( 'Edit Factsheet', 'f4d' ),
-		'update_item'         => __( 'Update Factsheet', 'f4d' ),
-		'search_items'        => __( 'Search Factsheets', 'f4d' ),
-		'not_found'           => __( 'Factsheets Not found', 'f4d' ),
-		'not_found_in_trash'  => __( 'Factsheets Not found in Trash', 'f4d' ),
-	);
-	$args = array(
-		'label'               => __( 'fs_post_type', 'f4d' ),
-		'description'         => __( 'Factsheets are used for updates categorized under Factsheets.', 'f4d' ),
-		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'page-attributes', 'post-formats', ),
-		'taxonomies'          => array( 'category', 'post_tag', 'post_format' ),
-		'hierarchical'        => false,
-		'public'              => true,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'show_in_nav_menus'   => true,
-		'show_in_admin_bar'   => true,
-		'menu_position'       => 5,
-		'can_export'          => true,
-		'has_archive'         => true,
-		'exclude_from_search' => false,
-		'publicly_queryable'  => true,
-		'capability_type'     => 'post',
-	);
-	register_post_type( 'fs_post_type', $args );
-
-}
-
-// Hook into the 'init' action
-add_action( 'init', 'custom_post_type', 0 );
-
-}
-
-*
-*
-*/
-
-
-
 /**
  * Register widgetized areas
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
 function f4d_widgets_init() {
+		register_sidebar( array(
+		'name' => 'Top Area Widget',
+		'id' => 'top_widget',
+		'description' => esc_html__( 'Appears in site header', 'f4d' ),
+		'before_widget' => '<div class="">',
+		'after_widget' => '</div>',
+		'before_title' => '<h3 class="hidetit">',
+		'after_title' => '</h3>',
+	) );
+		
 	register_sidebar( array(
-			'name' => esc_html__( 'Main Sidebar', 'f4d' ),
+			'name' => esc_html__( 'Main Sidebar', f4d ),
 			'id' => 'sidebar-main',
-			'description' => esc_html__( 'Appears in the sidebar on posts and pages except the optional Front Page template, which has its own widgets', 'f4d' ),
+			'description' => esc_html__( 'Appears in the sidebar on posts and pages except the optional Front Page template, which has its own widgets', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
-			'before_title' => '<h4 class="widget-title">',
-			'after_title' => '</h4>'
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>'
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Blog Sidebar', 'f4d' ),
+			'name' => esc_html__( 'Blog Sidebar', f4d ),
 			'id' => 'sidebar-blog',
-			'description' => esc_html__( 'Appears in the sidebar on the blog and archive pages only', 'f4d' ),
+			'description' => esc_html__( 'Appears in the sidebar on the blog and archive pages only', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -260,9 +251,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Single Post Sidebar', 'f4d' ),
+			'name' => esc_html__( 'Single Post Sidebar', f4d ),
 			'id' => 'sidebar-single',
-			'description' => esc_html__( 'Appears in the sidebar on single posts only', 'f4d' ),
+			'description' => esc_html__( 'Appears in the sidebar on single posts only', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -270,9 +261,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Page Sidebar', 'f4d' ),
+			'name' => esc_html__( 'Page Sidebar', f4d ),
 			'id' => 'sidebar-page',
-			'description' => esc_html__( 'Appears in the sidebar on pages only', 'f4d' ),
+			'description' => esc_html__( 'Appears in the sidebar on pages only', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -280,9 +271,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'First Front Page Banner Widget', 'f4d' ),
+			'name' => esc_html__( 'First Front Page Banner Widget', f4d ),
 			'id' => 'frontpage-banner1',
-			'description' => esc_html__( 'Appears in the banner area on the Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears in the banner area on the Front Page', f4d ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => '</div>',
 			'before_title' => '<h2 class="widget-title">',
@@ -290,9 +281,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Second Front Page Banner Widget', 'f4d' ),
+			'name' => esc_html__( 'Second Front Page Banner Widget', f4d ),
 			'id' => 'frontpage-banner2',
-			'description' => esc_html__( 'Appears in the banner area on the Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears in the banner area on the Front Page', f4d ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget' => '</div>',
 			'before_title' => '<h2 class="widget-title">',
@@ -300,9 +291,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'First Front Page Widget Area', 'f4d' ),
+			'name' => esc_html__( 'First Front Page Widget Area', f4d ),
 			'id' => 'sidebar-homepage1',
-			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -310,9 +301,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Second Front Page Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Second Front Page Widget Area', f4d ),
 			'id' => 'sidebar-homepage2',
-			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -320,9 +311,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Third Front Page Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Third Front Page Widget Area', f4d ),
 			'id' => 'sidebar-homepage3',
-			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -330,9 +321,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Fourth Front Page Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Fourth Front Page Widget Area', f4d ),
 			'id' => 'sidebar-homepage4',
-			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', 'f4d' ),
+			'description' => esc_html__( 'Appears when using the optional Front Page template with a page set as Static Front Page', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -340,9 +331,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'First Footer Widget Area', 'f4d' ),
+			'name' => esc_html__( 'First Footer Widget Area', f4d ),
 			'id' => 'sidebar-footer1',
-			'description' => esc_html__( 'Appears in the footer sidebar', 'f4d' ),
+			'description' => esc_html__( 'Appears in the footer sidebar', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -350,9 +341,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Second Footer Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Second Footer Widget Area', f4d ),
 			'id' => 'sidebar-footer2',
-			'description' => esc_html__( 'Appears in the footer sidebar', 'f4d' ),
+			'description' => esc_html__( 'Appears in the footer sidebar', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -360,9 +351,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Third Footer Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Third Footer Widget Area', f4d ),
 			'id' => 'sidebar-footer3',
-			'description' => esc_html__( 'Appears in the footer sidebar', 'f4d' ),
+			'description' => esc_html__( 'Appears in the footer sidebar', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -370,9 +361,9 @@ function f4d_widgets_init() {
 		) );
 
 	register_sidebar( array(
-			'name' => esc_html__( 'Fourth Footer Widget Area', 'f4d' ),
+			'name' => esc_html__( 'Fourth Footer Widget Area', f4d ),
 			'id' => 'sidebar-footer4',
-			'description' => esc_html__( 'Appears in the footer sidebar', 'f4d' ),
+			'description' => esc_html__( 'Appears in the footer sidebar', f4d ),
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 			'after_widget' => '</aside>',
 			'before_title' => '<h3 class="widget-title">',
@@ -385,7 +376,7 @@ add_action( 'widgets_init', 'f4d_widgets_init' );
 /**
  * Enqueue scripts and styles
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -396,17 +387,17 @@ function f4d_scripts_styles() {
 	 */
 
 	// Start off with a clean base by using normalise. If you prefer to use a reset stylesheet or something else, simply replace this
-	wp_register_style( 'normalize', trailingslashit( get_template_directory_uri() ) . 'css/normalize.css' , array(), '3.0.1', 'all' );
+	wp_register_style( 'normalize', trailingslashit( get_template_directory_uri() ) . 'css/normalize.css' , array(), '3.0.2', 'all' );
 	wp_enqueue_style( 'normalize' );
 
 	// Register and enqueue our icon font
 	// We're using the awesome Font Awesome icon font. http://fortawesome.github.io/Font-Awesome
-	wp_register_style( 'fontawesome', trailingslashit( get_template_directory_uri() ) . 'css/font-awesome.min.css' , array(), '4.2.0', 'all' );
+	wp_register_style( 'fontawesome', trailingslashit( get_template_directory_uri() ) . 'css/font-awesome.min.css' , array( 'normalize' ), '4.2.0', 'all' );
 	wp_enqueue_style( 'fontawesome' );
 
 	// Our styles for setting up the grid.
 	// If you prefer to use a different grid system, simply replace this and perform a find/replace in the php for the relevant styles. I'm nice like that!
-	wp_register_style( 'gridsystem', trailingslashit( get_template_directory_uri() ) . 'css/grid.css' , array(), '1.0.0', 'all' );
+	wp_register_style( 'gridsystem', trailingslashit( get_template_directory_uri() ) . 'css/grid.css' , array( 'fontawesome' ), '1.0.0', 'all' );
 	wp_enqueue_style( 'gridsystem' );
 
 	/*
@@ -414,17 +405,23 @@ function f4d_scripts_styles() {
 	 *
 	 * To disable in a child theme, use wp_dequeue_style()
 	 * function mytheme_dequeue_fonts() {
-	 *     wp_dequeue_style( ' f4d-fonts' );
+	 *     wp_dequeue_style( 'F4D-fonts' );
 	 * }
 	 * add_action( 'wp_enqueue_scripts', 'mytheme_dequeue_fonts', 11 );
 	 */
 	$fonts_url = f4d_fonts_url();
 	if ( !empty( $fonts_url ) ) {
-		wp_enqueue_style( ' f4d-fonts', esc_url_raw( $fonts_url ), array(), null );
+		wp_enqueue_style( 'F4D-fonts', esc_url_raw( $fonts_url ), array(), null );
+	}
+
+	// If using a child theme, auto-load the parent theme style.
+	// Props to Justin Tadlock for this recommendation - http://justintadlock.com/archives/2014/11/03/loading-parent-styles-for-child-themes
+	if ( is_child_theme() ) {
+		wp_enqueue_style( 'parent-style', trailingslashit( get_template_directory_uri() ) . 'style.css' );
 	}
 
 	// Enqueue the default WordPress stylesheet
-	wp_enqueue_style( 'style', get_stylesheet_uri(), array(), '1.2.3', 'all' );
+	wp_enqueue_style( 'style', get_stylesheet_uri() );
 
 
 	/**
@@ -449,60 +446,24 @@ function f4d_scripts_styles() {
 		wp_enqueue_script( 'commentvalidate' );
 		wp_localize_script( 'commentvalidate', 'comments_object', array(
 			'req' => get_option( 'require_name_email' ),
-			'author'  => esc_html__( 'Please enter your name', 'f4d' ),
-			'email'  => esc_html__( 'Please enter a valid email address', 'f4d' ),
-			'comment' => esc_html__( 'Please add a comment', 'f4d' ) )
+			'author'  => esc_html__( 'Please enter your name', f4d ),
+			'email'  => esc_html__( 'Please enter a valid email address', f4d ),
+			'comment' => esc_html__( 'Please add a comment', f4d ) )
 		);
 	}
 
 	// Include this script to envoke a button toggle for the main navigation menu on small screens
-	wp_register_script( 'small-menu', trailingslashit( get_template_directory_uri() ) . 'js/small-menu.js', array( 'jquery' ), '20130130', true );
-	wp_enqueue_script( 'small-menu' );
+wp_register_script( 'small-menu', trailingslashit( get_template_directory_uri() ) . 'js/small-menu.js', array( 'jquery' ), '20130130', true );
+wp_enqueue_script( 'small-menu' );
 
 }
 add_action( 'wp_enqueue_scripts', 'f4d_scripts_styles' );
 
 
 /**
- * Creates a nicely formatted and more specific title element text
- * for output in head of document, based on current view.
- *
- * @since f4d 1.0
- *
- * @param string $title Default title text for current view.
- * @param string $sep Optional separator.
- * @return string The filtered title.
- */
-function f4d_wp_title( $title, $sep ) {
-	global $paged, $page;
-
-	if ( is_feed() ) {
-		return $title;
-	}
-
-	// Add the blog name.
-	$title .= get_bloginfo( 'name' );
-
-	// Add the blog description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) ) {
-		$title = "$title $sep $site_description";
-	}
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 ) {
-		$title = "$title $sep " . sprintf( esc_html__( 'Page %s', 'f4d' ), max( $paged, $page ) );
-	}
-
-	return $title;
-}
-add_filter( 'wp_title', 'f4d_wp_title', 10, 2 );
-
-
-/**
  * Displays navigation to next/previous pages when applicable.
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param string html ID
  * @return void
@@ -518,12 +479,12 @@ if ( ! function_exists( 'f4d_content_nav' ) ) {
 		}
 		?>
 		<nav role="navigation" id="<?php echo $nav_id; ?>" class="<?php echo $nav_class; ?>">
-			<h3 class="assistive-text"><?php esc_html_e( 'Post navigation', 'f4d' ); ?></h3>
+			<h3 class="assistive-text"><?php esc_html_e( 'Post navigation', f4d ); ?></h3>
 
 			<?php if ( is_single() ) { // navigation links for single posts ?>
 
-				<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '<i class="fa fa-angle-left"></i>', 'Previous post link', 'f4d' ) . '</span> %title' ); ?>
-				<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '<i class="fa fa-angle-right"></i>', 'Next post link', 'f4d' ) . '</span>' ); ?>
+				<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '<i class="fa fa-angle-left"></i>', 'Previous post link', f4d ) . '</span> %title' ); ?>
+				<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '<i class="fa fa-angle-right"></i>', 'Next post link', f4d ) . '</span>' ); ?>
 
 			<?php } 
 			elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) { // navigation links for home, archive, and search pages ?>
@@ -534,9 +495,9 @@ if ( ! function_exists( 'f4d_content_nav' ) ) {
 					'current' => max( 1, get_query_var( 'paged' ) ),
 					'total' => $wp_query->max_num_pages,
 					'type' => 'list',
-					'prev_text' => wp_kses( __( '<i class="fa fa-angle-left"></i> Previous', 'f4d' ), array( 'i' => array( 
+					'prev_text' => wp_kses( __( '<i class="fa fa-angle-left"></i> Previous', f4d ), array( 'i' => array( 
 						'class' => array() ) ) ),
-					'next_text' => wp_kses( __( 'Next <i class="fa fa-angle-right"></i>', 'f4d' ), array( 'i' => array( 
+					'next_text' => wp_kses( __( 'Next <i class="fa fa-angle-right"></i>', f4d ), array( 'i' => array( 
 						'class' => array() ) ) )
 				) ); ?>
 
@@ -557,7 +518,7 @@ if ( ! function_exists( 'f4d_content_nav' ) ) {
  * Used as a callback by wp_list_comments() for displaying the comments.
  * (Note the lack of a trailing </li>. WordPress will add it itself once it's done listing any children and whatnot)
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param array Comment
  * @param array Arguments
@@ -573,7 +534,7 @@ if ( ! function_exists( 'f4d_comment' ) ) {
 			// Display trackbacks differently than normal comments ?>
 			<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 				<article id="comment-<?php comment_ID(); ?>" class="pingback">
-					<p><?php esc_html_e( 'Pingback:', 'f4d' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( esc_html__( '(Edit)', 'f4d' ), '<span class="edit-link">', '</span>' ); ?></p>
+					<p><?php esc_html_e( 'Pingback:', f4d ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( esc_html__( '(Edit)', f4d ), '<span class="edit-link">', '</span>' ); ?></p>
 				</article> <!-- #comment-##.pingback -->
 			<?php
 			break;
@@ -588,28 +549,28 @@ if ( ! function_exists( 'f4d_comment' ) ) {
 						printf( '<cite class="fn">%1$s %2$s</cite>',
 							get_comment_author_link(),
 							// If current post author is also comment author, make it known visually.
-							( $comment->user_id === $post->post_author ) ? '<span> ' . esc_html__( 'Post author', 'f4d' ) . '</span>' : '' );
+							( $comment->user_id === $post->post_author ) ? '<span> ' . esc_html__( 'Post author', f4d ) . '</span>' : '' );
 						printf( '<a href="%1$s" title="Posted %2$s"><time itemprop="datePublished" datetime="%3$s">%4$s</time></a>',
 							esc_url( get_comment_link( $comment->comment_ID ) ),
-							sprintf( esc_html__( '%1$s @ %2$s', 'f4d' ), esc_html( get_comment_date() ), esc_attr( get_comment_time() ) ),
+							sprintf( esc_html__( '%1$s @ %2$s', f4d ), esc_html( get_comment_date() ), esc_attr( get_comment_time() ) ),
 							get_comment_time( 'c' ),
 							/* Translators: 1: date, 2: time */
-							sprintf( esc_html__( '%1$s at %2$s', 'f4d' ), get_comment_date(), get_comment_time() )
+							sprintf( esc_html__( '%1$s at %2$s', f4d ), get_comment_date(), get_comment_time() )
 						);
 						?>
 					</header> <!-- .comment-meta -->
 
 					<?php if ( '0' == $comment->comment_approved ) { ?>
-						<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', 'f4d' ); ?></p>
+						<p class="comment-awaiting-moderation"><?php esc_html_e( 'Your comment is awaiting moderation.', f4d ); ?></p>
 					<?php } ?>
 
 					<section class="comment-content comment">
 						<?php comment_text(); ?>
-						<?php edit_comment_link( esc_html__( 'Edit', 'f4d' ), '<p class="edit-link">', '</p>' ); ?>
+						<?php edit_comment_link( esc_html__( 'Edit', f4d ), '<p class="edit-link">', '</p>' ); ?>
 					</section> <!-- .comment-content -->
 
 					<div class="reply">
-						<?php comment_reply_link( array_merge( $args, array( 'reply_text' => wp_kses( __( 'Reply <span>&darr;</span>', 'f4d' ), array( 'span' => array() ) ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+						<?php comment_reply_link( array_merge( $args, array( 'reply_text' => wp_kses( __( 'Reply <span>&darr;</span>', f4d ), array( 'span' => array() ) ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
 					</div> <!-- .reply -->
 				</article> <!-- #comment-## -->
 			<?php
@@ -622,7 +583,7 @@ if ( ! function_exists( 'f4d_comment' ) ) {
 /**
  * Update the Comments form so that the 'required' span is contained within the form label.
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param string Comment form fields html
  * @return string The updated comment form fields html
@@ -633,11 +594,11 @@ function f4d_comment_form_default_fields( $fields ) {
 	$req = get_option( 'require_name_email' );
 	$aria_req = ( $req ? ' aria-required="true"' : "" );
 
-	$fields[ 'author' ] = '<p class="comment-form-author">' . '<label for="author">' . esc_html__( 'Name', 'f4d' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label> ' . '<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></p>';
+	$fields[ 'author' ] = '<p class="comment-form-author">' . '<label for="author">' . esc_html__( 'Name', f4d ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label> ' . '<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></p>';
 
-	$fields[ 'email' ] =  '<p class="comment-form-email"><label for="email">' . esc_html__( 'Email', 'f4d' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label> ' . '<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' /></p>';
+	$fields[ 'email' ] =  '<p class="comment-form-email"><label for="email">' . esc_html__( 'Email', f4d ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label> ' . '<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' /></p>';
 
-	$fields[ 'url' ] =  '<p class="comment-form-url"><label for="url">' . esc_html__( 'Website', 'f4d' ) . '</label>' . '<input id="url" name="url" type="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" /></p>';
+	$fields[ 'url' ] =  '<p class="comment-form-url"><label for="url">' . esc_html__( 'Website', f4d ) . '</label>' . '<input id="url" name="url" type="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" /></p>';
 
 	return $fields;
 
@@ -649,14 +610,14 @@ add_action( 'comment_form_default_fields', 'f4d_comment_form_default_fields' );
  * Update the Comments form to add a 'required' span to the Comment textarea within the form label, because it's pointless 
  * submitting a comment that doesn't actually have any text in the comment field!
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param string Comment form textarea html
  * @return string The updated comment form textarea html
  */
 function f4d_comment_form_field_comment( $field ) {
 
-	$field = '<p class="comment-form-comment"><label for="comment">' . _x( 'Comment', 'noun', 'f4d' ) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
+	$field = '<p class="comment-form-comment"><label for="comment">' . _x( 'Comment', 'noun', f4d ) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
 
 	return $field;
 
@@ -667,7 +628,7 @@ add_action( 'comment_form_field_comment', 'f4d_comment_form_field_comment' );
 /**
  * Prints HTML with meta information for current post: author and date
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -711,7 +672,7 @@ if ( ! function_exists( 'f4d_posted_on' ) ) {
 		$date = sprintf( '<i class="fa %1$s"></i> <a href="%2$s" title="Posted %3$s" rel="bookmark"><time class="entry-date" datetime="%4$s" itemprop="datePublished">%5$s</time></a>',
 			$post_icon,
 			esc_url( get_permalink() ),
-			sprintf( esc_html__( '%1$s @ %2$s', 'f4d' ), esc_html( get_the_date() ), esc_attr( get_the_time() ) ),
+			sprintf( esc_html__( '%1$s @ %2$s', f4d ), esc_html( get_the_date() ), esc_attr( get_the_time() ) ),
 			esc_attr( get_the_date( 'c' ) ),
 			esc_html( get_the_date() )
 		);
@@ -719,22 +680,22 @@ if ( ! function_exists( 'f4d_posted_on' ) ) {
 		// Translators: 1: Date link 2: Author link 3: Categories 4: No. of Comments
 		$author = sprintf( '<i class="fa fa-pencil"></i> <address class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></address>',
 			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-			esc_attr( sprintf( esc_html__( 'View all posts by %s', 'f4d' ), get_the_author() ) ),
+			esc_attr( sprintf( esc_html__( 'View all posts by %s', f4d ), get_the_author() ) ),
 			get_the_author()
 		);
 
 		// Return the Categories as a list
-		$categories_list = get_the_category_list( esc_html__( ' ', 'f4d' ) );
+		$categories_list = get_the_category_list( esc_html__( ' ', f4d ) );
 
 		// Translators: 1: Permalink 2: Title 3: No. of Comments
 		$comments = sprintf( '<span class="comments-link"><i class="fa fa-comment"></i> <a href="%1$s" title="%2$s">%3$s</a></span>',
 			esc_url( get_comments_link() ),
-			esc_attr( esc_html__( 'Comment on ' . the_title_attribute( 'echo=0' ) ) ),
-			( get_comments_number() > 0 ? sprintf( _n( '%1$s Comment', '%1$s Comments', get_comments_number(), 'f4d' ), get_comments_number() ) : esc_html__( 'No Comments', 'f4d' ) )
+			esc_attr( esc_html__( 'Comment on ' , f4d ) . the_title_attribute( 'echo=0' ) ),
+			( get_comments_number() > 0 ? sprintf( _n( '%1$s Comment', '%1$s Comments', get_comments_number(), f4d ), get_comments_number() ) : esc_html__( 'No Comments', f4d ) )
 		);
 
 		// Translators: 1: Date 2: Author 3: Categories 4: Comments
-		printf( wp_kses( __( '<div class="header-meta">%1$s%2$s<span class="post-categories">%3$s</span>%4$s</div>', 'f4d' ), array( 
+		printf( wp_kses( __( '<div class="header-meta">%1$s%2$s<span class="post-categories">%3$s</span>%4$s</div>', f4d ), array( 
 			'div' => array ( 
 				'class' => array() ), 
 			'span' => array( 
@@ -751,7 +712,7 @@ if ( ! function_exists( 'f4d_posted_on' ) ) {
 /**
  * Prints HTML with meta information for current post: categories, tags, permalink
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -760,21 +721,21 @@ if ( ! function_exists( 'f4d_entry_meta' ) ) {
 		// Return the Tags as a list
 		$tag_list = "";
 		if ( get_the_tag_list() ) {
-			$tag_list = get_the_tag_list( '<span class="post-tags">', esc_html__( ' ', 'f4d' ), '</span>' );
+			$tag_list = get_the_tag_list( '<span class="post-tags">', esc_html__( ' ', f4d ), '</span>' );
 		}
 
 		// Translators: 1 is tag
 		if ( $tag_list ) {
-			printf( wp_kses( __( '<i class="fa fa-tag"></i> %1$s', 'f4d' ), array( 'i' => array( 'class' => array() ) ) ), $tag_list );
+			printf( wp_kses( __( '<i class="fa fa-tag"></i> %1$s', f4d ), array( 'i' => array( 'class' => array() ) ) ), $tag_list );
 		}
 	}
 }
 
 
 /**
- * Adjusts content_width value for full-width templates and attachments -- WHY DO THIS -Ian?
+ * Adjusts content_width value for full-width templates and attachments
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -790,7 +751,7 @@ add_action( 'template_redirect', 'f4d_content_width' );
 /**
  * Change the "read more..." link so it links to the top of the page rather than part way down
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param string The 'Read more' link
  * @return string The link to the post url without the more tag appended on the end
@@ -811,12 +772,12 @@ add_filter( 'the_content_more_link', 'f4d_remove_more_jump_link' );
 /**
  * Returns a "Continue Reading" link for excerpts
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return string The 'Continue reading' link
  */
 function f4d_continue_reading_link() {
-	return '&hellip;<p><a class="more-link" href="'. esc_url( get_permalink() ) . '" title="' . esc_html__( 'Continue reading', 'f4d' ) . ' &lsquo;' . get_the_title() . '&rsquo;">' . wp_kses( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'f4d' ), array( 'span' => array( 
+	return '&hellip;<p><a class="more-link" href="'. esc_url( get_permalink() ) . '" title="' . esc_html__( 'Continue reading', f4d ) . ' &lsquo;' . get_the_title() . '&rsquo;">' . wp_kses( __( 'Continue reading <span class="meta-nav">&rarr;</span>', f4d ), array( 'span' => array( 
 			'class' => array() ) ) ) . '</a></p>';
 }
 
@@ -824,7 +785,7 @@ function f4d_continue_reading_link() {
 /**
  * Replaces "[...]" (appended to automatically generated excerpts) with the f4d_continue_reading_link().
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param string Auto generated excerpt
  * @return string The filtered excerpt
@@ -838,7 +799,7 @@ add_filter( 'excerpt_more', 'f4d_auto_excerpt_more' );
 /**
  * Extend the user contact methods to include Twitter, Facebook and Google+
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param array List of user contact methods
  * @return array The filtered list of updated user contact methods
@@ -862,7 +823,7 @@ add_filter( 'user_contactmethods', 'f4d_new_contactmethods', 10, 1 );
  * Add a filter for wp_nav_menu to add an extra class for menu items that have children (ie. sub menus)
  * This allows us to perform some nicer styling on our menu items that have multiple levels (eg. dropdown menu arrows)
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @param Menu items
  * @return array An extra css class is on menu items with children
@@ -890,7 +851,7 @@ add_filter( 'wp_nav_menu_objects', 'f4d_add_menu_parent_class' );
 /**
  * Add Filter to allow Shortcodes to work in the Sidebar
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  */
 add_filter( 'widget_text', 'do_shortcode' );
 
@@ -898,7 +859,7 @@ add_filter( 'widget_text', 'do_shortcode' );
 /**
  * Return an unordered list of linked social media icons, based on the urls provided in the Theme Options
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return string Unordered list of linked social media icons
  */
@@ -906,21 +867,21 @@ if ( ! function_exists( 'f4d_get_social_media' ) ) {
 	function f4d_get_social_media() {
 		$output = '';
 		$icons = array(
-			array( 'url' => of_get_option( 'social_twitter', '' ), 'icon' => 'fa-twitter', 'title' => esc_html__( 'Follow me on Twitter', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_facebook', '' ), 'icon' => 'fa-facebook', 'title' => esc_html__( 'Friend me on Facebook', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_googleplus', '' ), 'icon' => 'fa-google-plus', 'title' => esc_html__( 'Connect with me on Google+', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_linkedin', '' ), 'icon' => 'fa-linkedin', 'title' => esc_html__( 'Connect with me on LinkedIn', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_slideshare', '' ), 'icon' => 'fa-slideshare', 'title' => esc_html__( 'Follow me on SlideShare', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_dribbble', '' ), 'icon' => 'fa-dribbble', 'title' => esc_html__( 'Follow me on Dribbble', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_tumblr', '' ), 'icon' => 'fa-tumblr', 'title' => esc_html__( 'Follow me on Tumblr', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_github', '' ), 'icon' => 'fa-github', 'title' => esc_html__( 'Fork me on GitHub', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_bitbucket', '' ), 'icon' => 'fa-bitbucket', 'title' => esc_html__( 'Fork me on Bitbucket', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_foursquare', '' ), 'icon' => 'fa-foursquare', 'title' => esc_html__( 'Follow me on Foursquare', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_youtube', '' ), 'icon' => 'fa-youtube', 'title' => esc_html__( 'Subscribe to me on YouTube', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_instagram', '' ), 'icon' => 'fa-instagram', 'title' => esc_html__( 'Follow me on Instagram', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_flickr', '' ), 'icon' => 'fa-flickr', 'title' => esc_html__( 'Connect with me on Flickr', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_pinterest', '' ), 'icon' => 'fa-pinterest', 'title' => esc_html__( 'Follow me on Pinterest', 'f4d' ) ),
-			array( 'url' => of_get_option( 'social_rss', '' ), 'icon' => 'fa-rss', 'title' => esc_html__( 'Subscribe to my RSS Feed', 'f4d' ) )
+			array( 'url' => of_get_option( 'social_twitter', '' ), 'icon' => 'fa-twitter', 'title' => esc_html__( 'Follow me on Twitter', f4d ) ),
+			array( 'url' => of_get_option( 'social_facebook', '' ), 'icon' => 'fa-facebook', 'title' => esc_html__( 'Friend me on Facebook', f4d ) ),
+			array( 'url' => of_get_option( 'social_googleplus', '' ), 'icon' => 'fa-google-plus', 'title' => esc_html__( 'Connect with me on Google+', f4d ) ),
+			array( 'url' => of_get_option( 'social_linkedin', '' ), 'icon' => 'fa-linkedin', 'title' => esc_html__( 'Connect with me on LinkedIn', f4d ) ),
+			array( 'url' => of_get_option( 'social_slideshare', '' ), 'icon' => 'fa-slideshare', 'title' => esc_html__( 'Follow me on SlideShare', f4d ) ),
+			array( 'url' => of_get_option( 'social_dribbble', '' ), 'icon' => 'fa-dribbble', 'title' => esc_html__( 'Follow me on Dribbble', f4d ) ),
+			array( 'url' => of_get_option( 'social_tumblr', '' ), 'icon' => 'fa-tumblr', 'title' => esc_html__( 'Follow me on Tumblr', f4d ) ),
+			array( 'url' => of_get_option( 'social_github', '' ), 'icon' => 'fa-github', 'title' => esc_html__( 'Fork me on GitHub', f4d ) ),
+			array( 'url' => of_get_option( 'social_bitbucket', '' ), 'icon' => 'fa-bitbucket', 'title' => esc_html__( 'Fork me on Bitbucket', f4d ) ),
+			array( 'url' => of_get_option( 'social_foursquare', '' ), 'icon' => 'fa-foursquare', 'title' => esc_html__( 'Follow me on Foursquare', f4d ) ),
+			array( 'url' => of_get_option( 'social_youtube', '' ), 'icon' => 'fa-youtube', 'title' => esc_html__( 'Subscribe to me on YouTube', f4d ) ),
+			array( 'url' => of_get_option( 'social_instagram', '' ), 'icon' => 'fa-instagram', 'title' => esc_html__( 'Follow me on Instagram', f4d ) ),
+			array( 'url' => of_get_option( 'social_flickr', '' ), 'icon' => 'fa-flickr', 'title' => esc_html__( 'Connect with me on Flickr', f4d ) ),
+			array( 'url' => of_get_option( 'social_pinterest', '' ), 'icon' => 'fa-pinterest', 'title' => esc_html__( 'Follow me on Pinterest', f4d ) ),
+			array( 'url' => of_get_option( 'social_rss', '' ), 'icon' => 'fa-rss', 'title' => esc_html__( 'Subscribe to my RSS Feed', f4d ) )
 		);
 
 		foreach ( $icons as $key ) {
@@ -929,7 +890,7 @@ if ( ! function_exists( 'f4d_get_social_media' ) ) {
 				$output .= sprintf( '<li><a href="%1$s" title="%2$s"%3$s><span class="fa-stack fa-lg"><i class="fa fa-square fa-stack-2x"></i><i class="fa %4$s fa-stack-1x fa-inverse"></i></span></a></li>',
 					esc_url( $value ),
 					$key['title'],
-					( !of_get_option( 'social_newtab' ) ? '' : ' target="_blank"' ),
+					( !of_get_option( 'social_newtab', '0' ) ? '' : ' target="_blank"' ),
 					$key['icon']
 				);
 			}
@@ -947,7 +908,7 @@ if ( ! function_exists( 'f4d_get_social_media' ) ) {
 /**
  * Return a string containing the footer credits & link
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return string Footer credits & link
  */
@@ -955,10 +916,10 @@ if ( ! function_exists( 'f4d_get_credits' ) ) {
 	function f4d_get_credits() {
 		$output = '';
 		$output = sprintf( '%1$s <a href="%2$s" title="%3$s">%4$s</a>',
-			esc_html__( 'Designed by', 'f4d' ),
-			esc_url( esc_html__( 'http://f4digital.com', 'f4d' ) ),
-			esc_attr( esc_html__( 'F4Digital', 'f4d' ) ),
-			esc_html__( '.com', 'f4d' )
+			esc_html__( 'Proudly powered by', f4d ),
+			esc_url( esc_html__( 'http://wordpress.org/', f4d ) ),
+			esc_attr( esc_html__( 'Semantic Personal Publishing Platform', f4d ) ),
+			esc_html__( 'WordPress', f4d )
 		);
 
 		return $output;
@@ -969,7 +930,7 @@ if ( ! function_exists( 'f4d_get_credits' ) ) {
 /**
  * Outputs the selected Theme Options inline into the <head>
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  *
  * @return void
  */
@@ -1018,95 +979,164 @@ add_action( 'wp_head', 'f4d_theme_options_styles' );
  * We don't include an add_filter for 'prepend_attachment' as it causes an image to appear in the content, on attachment pages.
  * Also, since the Theme Options editor doesn't allow you to add images anyway, no big deal.
  *
- * @since f4d 1.0
+ * @since F4D 1.0
  */
 add_filter( 'meta_content', 'wptexturize' );
 add_filter( 'meta_content', 'convert_smilies' );
 add_filter( 'meta_content', 'convert_chars'  );
 add_filter( 'meta_content', 'wpautop' );
-add_filter( 'meta_content', 'shortcode_unautop'  );
-
-
-//   REZON8 Plugin functions  //
-
-
-
-
-// REMOVE UNNECESSARY META TAGS FROM HTML MARKUP //
-remove_action( 'wp_head', 'wp_generator' ) ; 
-remove_action( 'wp_head', 'wlwmanifest_link' ) ; 
-remove_action( 'wp_head', 'rsd_link' ) ;
-
-
-// ALLOW SVG FILES IN MEDIA LIBRARY - DISABLED BY DEFAULT - THIS IS A WORKAROUND //
-
-function allow_svg_upload_mimes( $mimes ) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter( 'upload_mimes', 'allow_svg_upload_mimes' );
-
-
-//     Extending the Display-posts-shortcode plugin  //
+add_filter( 'meta_content', 'shortcode_unautop' );
+add_filter( 'meta_content', 'do_shortcode' );
 
 /**
- * Display Posts Shortcode - Display message if no results
- *
- * @author Bill Erickson
- * @link http://www.billerickson.net/code/display-posts-shortcode-no-results
- *
- * @param string $output, default is empty
- * @return string $output
+ * Unhook the WooCommerce Wrappers
  */
-function be_no_results( $output ) {
-	$output = '<p>There is no content to display.</p>';
-	return $output;
-}
-add_filter( 'display_posts_shortcode_no_results', 'be_no_results' );
+remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
+remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
 
 /**
- * Display Posts - Exclude Current Post
+ * Outputs the opening container div for WooCommerce
  *
- * @author Bill Erickson
- * @link http://wordpress.org/extend/plugins/display-posts-shortcode/
+ * @since F4D 1.3
  *
- * @param array $args
- * @return array
+ * @return void
  */
-function be_exclude_current_post( $args ) {
-	if( is_singular() && !isset( $args['post__in'] ) )
-		$args['post__not_in'] = array( get_the_ID() );
-
-	return $args;
+if ( ! function_exists( 'f4d_before_woocommerce_wrapper' ) ) {
+	function f4d_before_woocommerce_wrapper() {
+		echo '<div id="primary" class="site-content row" role="main">';
+	}
 }
-add_filter( 'display_posts_shortcode_args', 'be_exclude_current_post' );
 
 
-
-/** Register oEmbed providers  **/
-function ifttt_oembed_provider() {
-
-	wp_oembed_add_provider( '#https?://(www\.)?ifttt.com/recipes/.*#i', 'http://www.ifttt.com/oembed/', true );
-
+/**
+ * Outputs the closing container div for WooCommerce
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_after_woocommerce_wrapper' ) ) {
+	function f4d_after_woocommerce_wrapper() {
+		echo '</div> <!-- /#primary.site-content.row -->';
+	}
 }
-// Hook into the 'init' action
-add_action( 'init', 'ifttt_oembed_provider' );
 
-function instagram_oembed_provider() {
 
-	wp_oembed_add_provider( 'http://instagram.com/p/*', 'http://api.instagram.com/oembed', false );
-	wp_oembed_add_provider( 'http://instagr.am/p/*', 'http://api.instagram.com/oembed', false );
-
+/**
+ * Check if WooCommerce is active
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+function f4d_is_woocommerce_active() {
+	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
-// Hook into the 'init' action
-add_action( 'init', 'instagram_oembed_provider' );
 
-// Register oEmbed providers
-function kickstarter_oembed_provider() {
 
-	wp_oembed_add_provider( 'http://www.kickstarter.com/projects/*', 'http://www.kickstarter.com/services/oembed', false );
-
+/**
+ * Check if WooCommerce is active and a WooCommerce template is in use and output the containing div
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_setup_woocommerce_wrappers' ) ) {
+	function f4d_setup_woocommerce_wrappers() {
+		if ( f4d_is_woocommerce_active() && is_woocommerce() ) {
+				add_action( 'f4d_before_woocommerce', 'f4d_before_woocommerce_wrapper', 10, 0 );
+				add_action( 'f4d_after_woocommerce', 'f4d_after_woocommerce_wrapper', 10, 0 );		
+		}
+	}
+	add_action( 'template_redirect', 'f4d_setup_woocommerce_wrappers', 9 );
 }
-// Hook into the 'init' action
-add_action( 'init', 'kickstarter_oembed_provider' );
+
+
+/**
+ * Outputs the opening wrapper for the WooCommerce content
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_woocommerce_before_main_content' ) ) {
+	function f4d_woocommerce_before_main_content() {
+		if( ( is_shop() && !of_get_option( 'woocommerce_shopsidebar', '1' ) ) || ( is_product() && !of_get_option( 'woocommerce_productsidebar', '1' ) ) ) {
+			echo '<div class="col grid_12_of_12">';
+		}
+		else {
+			echo '<div class="col grid_8_of_12">';
+		}
+	}
+	add_action( 'woocommerce_before_main_content', 'f4d_woocommerce_before_main_content', 10 );
+}
+
+
+/**
+ * Outputs the closing wrapper for the WooCommerce content
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_woocommerce_after_main_content' ) ) {
+	function f4d_woocommerce_after_main_content() {
+		echo '</div>';
+	}
+	add_action( 'woocommerce_after_main_content', 'f4d_woocommerce_after_main_content', 10 );
+}
+
+
+/**
+ * Remove the sidebar from the WooCommerce templates
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_remove_woocommerce_sidebar' ) ) {
+	function f4d_remove_woocommerce_sidebar() {
+		if( ( is_shop() && !of_get_option( 'woocommerce_shopsidebar', '1' ) ) || ( is_product() && !of_get_option( 'woocommerce_productsidebar', '1' ) ) ) {
+			remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+		}
+	}
+	add_action( 'woocommerce_before_main_content', 'f4d_remove_woocommerce_sidebar' );
+}
+
+
+/**
+ * Remove the breadcrumbs from the WooCommerce pages
+ *
+ * @since F4D 1.3
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_remove_woocommerce_breadcrumbs' ) ) {
+	function f4d_remove_woocommerce_breadcrumbs() {
+		remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
+	}
+}
+
+
+/**
+ * Set the number of products to display on the WooCommerce shop page
+ *
+ * @since F4D 1.3.1
+ *
+ * @return void
+ */
+if ( ! function_exists( 'f4d_set_number_woocommerce_products' ) ) {
+	function f4d_set_number_woocommerce_products() {
+		if ( of_get_option( 'shop_products', '12' ) ) {
+			$numprods = "return " . sanitize_text_field( of_get_option( 'shop_products', '12' ) ) . ";";
+			add_filter( 'loop_shop_per_page', create_function( '$cols', $numprods ), 20 );
+		}
+	}
+	add_action( 'init', 'f4d_set_number_woocommerce_products' );
+}

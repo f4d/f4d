@@ -3,8 +3,8 @@
  * The sidebar containing the front page widget areas.
  * If there are no active widgets, the sidebar will be hidden completely.
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 ?>
 	<?php
