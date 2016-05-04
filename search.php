@@ -2,8 +2,8 @@
 /**
  * The template for displaying Search Results.
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 
 get_header(); ?>
@@ -16,7 +16,7 @@ get_header(); ?>
 			<?php if ( have_posts() ) : ?>
 
 				<header class="page-header">
-					<h1 class="page-title"><?php printf( esc_html__( 'Search Results for: %s', 'f4d' ), '<span>&ldquo;' . get_search_query() . '&rdquo;</span>' ); ?></h1>
+					<h1 class="page-title"><?php printf( esc_html__( 'Search Results for: %s', f4d ), '<span>&ldquo;' . get_search_query() . '&rdquo;</span>' ); ?></h1>
 				</header>
 
 				<?php // Start the Loop ?>

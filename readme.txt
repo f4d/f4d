@@ -1,67 +1,60 @@
-﻿=== f4d ===
-Contributors: ILowell, ahortin
-Donate link: 
+=== F4D ===
+Contributors: ian lowell, ahortin
+Donate link: http://f4.digital
 Tags: black, gray, dark, light, one-column, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 1.2.12
+Tested up to: 4.4.2
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
- f4d is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom Theme Options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. f4d is now Multilingual Ready (WPML) and translated into Spanish and German.
+F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. Its base is a responsive, 12 column grid. It incorporates custom theme options that are easy to modify, a set of common templates, support for WordPress Post Formats and the gorgeous, retina friendly Font Awesome icon font. F4D is WooCommerce compatible, Multilingual Ready (WPML) and translated into Spanish, German and French. F4D is also compatable with popular page builders such as Visual Composer, Beaver Builder, Divi Builder and the SiteOrigin Page Builder.
 
 
 == Description ==
 
- f4d is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or
-even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the  f4d theme which uses; Underscores (_s) and TwentyTwelve themes, so that
-means not only is it flexible, it's extremely easy to customise. There's no need to make a child theme (unless you really want to), just dig in to the
-code & use it to give yourself a kickstart in creating your next awesome theme.
+F4D is your basic building block for creating beautiful, responsive custom themes. It's not a convoluted or confusing framework that's hard to learn or even harder to modify. It's a simple and elegant starter theme built on HTML5 & CSS3. It's based on the Underscores (_s) and TwentyTwelve themes, so that means not only is it flexible, it's extremely easy to customise. There's no need to make a child theme (unless you really want to), just dig in to the code & use it to give yourself a kickstart in creating your next awesome theme.
 
-Its base is a responsive, 12 column grid. It uses Normalize to make sure that browsers render all elements more consistently and Mordernizr for
-detecting HTML5 and CSS3 browser capabilities along with some default stylings from HTML5 Boilerplate.
+If you do decide to use a child theme with F4D, there's no need to use CSS @import or even enqueue the parent stylesheet. F4D will automatically enqueue the parent stylesheet for you. How nice is that!
 
-It incorporates the [Options Framework](http://wptheming.com/options-framework-theme/) by Devin Price to make it super easy to add custom Theme Options
-as well as the gorgeous [Font Awesome](http://fortawesome.github.io/Font-Awesome/) icon font by Dave Gandy.
+F4D's base is a responsive, 12 column grid. It uses Normalize to make sure that browsers render all elements more consistently and Mordernizr for detecting HTML5 and CSS3 browser capabilities along with some default stylings from HTML5 Boilerplate.
+
+It incorporates the [Options Framework](http://wptheming.com/options-framework-theme/) by Devin Price to make it super easy to add custom Theme Options as well as the gorgeous [Font Awesome](http://fortawesome.github.io/Font-Awesome/) icon font by Dave Gandy.
 
 The main navigation uses the standard WordPress menu. Support for dropdown menus is inluded by default. If you'd like to envoke a button toggle for the main navigation menu on small screens, simply uncomment the two lines from the f4d_scripts_styles() function within functions.php to register and enqueue the necessary javascript file, and BAM! You're done!
 
+If you're looking to build an eCommerce website, F4D now supports WooCommerce. When WooCommerce is activated, an extra tab is displayed within the Theme Options page that provides options to show or hide the sidebar on the default WooCommerce templates, along with the choice to remove the built-in WooCommerce breadcrumbs.
+
 Templates
 
- f4d includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag,
-Categories, Authors, Search, Posts Archive and 404.
+F4D includes a set of your most common theme templates, including templates for Full-Width pages, Left Sidebar, Right Sidebar (default), Front-Page, Tag, Categories, Authors, Search, Posts Archive and 404.
+
+If you're using one of the many page builder plugins that are available, such as Visual Composer, Beaver Builder, Divi Builder or the SiteOrigin Page Builder, try using the Page Builder Full-Width Template or the Page Builder Boxed Template. The Page Builder Full-Width Template is a true full browser width template while the Page Builder Boxed Template contains your content in a boxed layout. Depending which Page Builder plugin that you're using, you may find that one template provides a better layout than the other.
 
 Post Formats
 
-All the standard WordPress Post Formats are supported. These include; Aside, Gallery, Link, Image, Quote, Status, Video, Audio, Chat and of course, 
-your standard post.
+All the standard WordPress Post Formats are supported. These include; Aside, Gallery, Link, Image, Quote, Status, Video, Audio, Chat and of course, your standard post.
 
 Widgets
 
-Widgets are a great way of adding extra content to your site and f4d has a whole assortment of them.
+Widgets are a great way of adding extra content to your site and F4D has a whole assortment of them.
 
 Main Sidebar: Appears in the sidebar on posts and pages except the optional Homepage template, which has its own widgets
 Blog Sidebar: Appears in the sidebar on the blog and archive pages only
 Single Post Sidebar: Appears in the sidebar on single posts only
 Page Sidebar: Appears in the sidebar on pages only
 
-The Front Page Banner Widget areas are dynamic! You can use up to two of these and they'll magically space themselves out evenly. For example, if you 
-only add widgets into the First Front Page Banner Widget Area, then it will expand the full width of the page. However, if you add widgets to both Front 
-Page Banner Widget areas, they'll magically space themselves out over two equal columns.
+The Front Page Banner Widget areas are dynamic! You can use up to two of these and they'll magically space themselves out evenly. For example, if you only add widgets into the First Front Page Banner Widget Area, then it will expand the full width of the page. However, if you add widgets to both Front Page Banner Widget areas, they'll magically space themselves out over two equal columns.
 First Front Page Banner Widget: Appears in the banner area on the Front Page
 Second Front Page Banner Widget: Appears in the banner area on the Front Page
 
-The Front Page Widget areas are dynamic! You can use up to four of these and they'll magically space themselves out evenly. For example, if you only add 
-widgets into the First Front Page Widget Area, then it will expand the full width of the page. However, if you add widgets to all four Front Page Widget 
-Areas, they'll magically space themselves out over four equal columns.
+The Front Page Widget areas are dynamic! You can use up to four of these and they'll magically space themselves out evenly. For example, if you only add widgets into the First Front Page Widget Area, then it will expand the full width of the page. However, if you add widgets to all four Front Page Widget Areas, they'll magically space themselves out over four equal columns.
 First Homepage Widget Area: Appears when using the optional homepage template with a page set as Static Front Page
 Second Homepage Widget Area: Appears when using the optional homepage template with a page set as Static Front Page
 Third Homepage Widget Area: Appears when using the optional homepage template with a page set as Static Front Page
 Fourth Homepage Widget Area: Appears when using the optional homepage template with a page set as Static Front Page
 
-The Footer Widget areas are dynamic! You can use up to four of these and they'll magically space themselves out evenly. For example, if you only add 
-widgets into the First Footer Widget Area, then it will expand the full width of the page. However, if you add widgets to all four Footer Widget Areas, 
-they'll magically space themselves out over four equal columns.
+The Footer Widget areas are dynamic! You can use up to four of these and they'll magically space themselves out evenly. For example, if you only add widgets into the First Footer Widget Area, then it will expand the full width of the page. However, if you add widgets to all four Footer Widget Areas, they'll magically space themselves out over four equal columns.
 First Footer Widget Area: Appears in the footer sidebar
 Second Footer Widget Area: Appears in the footer sidebar
 Third Footer Widget Area: Appears in the footer sidebar
@@ -82,11 +75,16 @@ Specifying the URL's for various social media networks
 Specifying the banner background image & color
 Specifying the footer color
 Changing the footer credit text
+Hiding the sidebar on WooCommerce templates
+Hiding the WooCommerce breadcrumbs
 
 Multilingual Ready (WPML)
 
 Using the WordPress Multilingual Plugin (WPML) it's now easy to build multilingual sites. With WPML you can translate pages, posts, custom types, taxonomy, menus and even the theme’s texts.
 
+WooCommerce Support
+
+WooCommerce is a WordPress eCommerce toolkit that helps you sell anything. Beautifully. Turn your website into a powerful eCommerce site by installing the WooCommerce plugin by WooThemes.
 
 == Installation ==
 
@@ -94,21 +92,21 @@ There are three ways to install your theme. It can be installed by manually uplo
 it can be installed by downloading from the WordPress Theme Directory within the Dashboard or it can be installed by uploading the theme zip
 file that you downloaded.
 
-Use the following instructions to install & activate f4d using your preferred method.
+Use the following instructions to install & activate F4D using your preferred method.
 
 Manual installation:
 
-1. Unzip the files from the f4d zip file that you downloaded
-2. Upload the f4d folder to your /wp-content/themes/ directory
+1. Unzip the files from the F4D zip file that you downloaded
+2. Upload the F4D folder to your /wp-content/themes/ directory
 3. Click on the Appearance > Themes menu option in the WordPress Dashboard
-4. Click the Activate link below the f4d preview thumbnail
+4. Click the Activate link below the F4D preview thumbnail
 
 Install from the WordPress Theme Directory:
 
 1. Click on the Appearance > Themes menu option in the WordPress Dashboard
 2. Click the Install Themes tab at the top of the page
-3. Type 'f4d' in the search field, without the quotes, and then click the Search button
-4. Click the Install Now link below the f4d preview thumbnail
+3. Type f4d in the search field, without the quotes, and then click the Search button
+4. Click the Install Now link below the F4D preview thumbnail
 5. Once the theme has been installed, click the Activate link
 
 Install by uploading the theme zip file:
@@ -123,21 +121,21 @@ Install by uploading the theme zip file:
 
 == Getting Started ==
 
-Since f4d is a starter theme to kick off your own awesome theme, the first thing you want to do is copy the f4d theme folder 
+Since F4D is a starter theme to kick off your own awesome theme, the first thing you want to do is copy the F4D theme folder 
 and change the name to something else. You'll then need to do a three-step find and replace on the name in all the templates.
 
-1. Search for f4d inside single quotations to capture the text domain.
+1. Search for F4D inside single quotations to capture the text domain.
 2. Search for f4d_ to capture all the function names.
-3. Search for f4d with a space before it to replace all the occurrences of it in comments.
+3. Search for F4D with a space before it to replace all the occurrences of it in comments.
    (You'd replace this with the capitalized version of your theme name.)
 
 or, to put it another way...
 
-Search for:'f4d'
+Search for:f4d
  Replace with:'yourawesomethemename'
 Search for:f4d_
  Replace with:yourawesomethemename_
-Search for: f4d
+Search for: F4D
  Replace with: YourAwesomeThemeName
 
 Lastly, update the stylesheet header in style.css and either update or delete this readme.txt file.
@@ -145,7 +143,7 @@ Lastly, update the stylesheet header in style.css and either update or delete th
 
 == License ==
 
- f4d is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+F4D is licensed under the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the
 Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -153,7 +151,7 @@ Free Software Foundation; either version 2 of the License, or (at your option) a
 
 == Credits ==
 
- f4d utilises the following awesomeness:
+F4D utilises the following awesomeness:
 
 [Options Framework](http://wptheming.com/options-framework-theme), which is licensed under the GPLv2 License
 [Modernizr](http://modernizr.com), which is licensed under the MIT license
@@ -165,6 +163,26 @@ Free Software Foundation; either version 2 of the License, or (at your option) a
 
 
 == Changelog ==
+
+= 1.3.2 =
+- Fixed display of Related Products on Single Product page
+- Added filter for displaying shortcodes properly in footer content
+- Added theme support for HTML5 markup for the search forms, comment forms, comment lists, gallery, and caption
+- Added new page builder templates
+
+= 1.3.1 =
+- Updated styles for WooCommerce 2.3
+- Added automatic enqueueing of parent stylesheet for child themes.
+- Added dependencies when enqueing styles to ensure they're loaded in correct order
+- Added theme option to set the number of products to display on the WooCommerce shop page
+
+= 1.3 =
+- Updated normalize.css to v3.0.2
+- Updated Options Framework to v1.9.1
+- Fixed focus on footer links so they're visible
+- Added French translation. Props @arpinfo
+- Added support for new title-tag
+- Added support for WooCommerce
 
 = 1.2.12 =
 - Updated Modernizr to v2.8.3

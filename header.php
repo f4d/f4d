@@ -4,8 +4,8 @@
  *
  * Displays all of the <head> section and everything up till <div id="maincontentcontainer">
  *
- * @package f4d
- * @since f4d 1.0
+ * @package F4D
+ * @since F4D 1.0
  */
 ?><!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -21,7 +21,6 @@
 	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title><?php wp_title( '|', true, 'right' ); ?></title>
 	<meta http-equiv="cleartype" content="on">
 
 	<!-- Responsive and mobile friendly stuff -->
@@ -39,7 +38,7 @@
 
 <div id="wrapper" class="hfeed site">
 
-	<div class="visuallyhidden skip-link"><a href="#primary" title="<?php esc_attr_e( 'Skip to main content', 'f4d' ); ?>"><?php esc_html_e( 'Skip to main content', 'f4d' ); ?></a></div>
+	<div class="visuallyhidden skip-link"><a href="#primary" title="<?php esc_attr_e( 'Skip to main content', f4d ); ?>"><?php esc_html_e( 'Skip to main content', f4d ); ?></a></div>
 
 	<div id="headercontainer">
 
@@ -64,8 +63,8 @@
 					<?php echo f4d_get_social_media(); ?>
 				</div>
 				<nav id="site-navigation" class="main-navigation" role="navigation">
-					<h3 class="menu-toggle assistive-text"><?php esc_html_e( 'Menu', 'f4d' ); ?></h3>
-					<div class="assistive-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'f4d' ); ?>"><?php esc_html_e( 'Skip to content', 'f4d' ); ?></a></div>
+					<h3 class="menu-toggle assistive-text"><?php esc_html_e( 'Menu', f4d ); ?></h3>
+					<div class="assistive-text skip-link"><a href="#content" title="<?php esc_attr_e( 'Skip to content', f4d ); ?>"><?php esc_html_e( 'Skip to content', f4d ); ?></a></div>
 					<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>
 				</nav> <!-- /.site-navigation.main-navigation -->
 			</div> <!-- /.col.grid_7_of_12 -->
@@ -106,3 +105,4 @@
 	</div> <!-- /#bannercontainer -->
 
 	<div id="maincontentcontainer">
+		<?php	do_action( 'f4d_before_woocommerce' ); ?>
